@@ -1,6 +1,7 @@
-FROM alpine:latest
+FROM ubuntu:focal
 
-RUN apk --no-cache add ca-certificates
+RUN apt update
+RUN apt install -y ca-certificates tzdata
 WORKDIR /root/
 
 CMD ["./app"]

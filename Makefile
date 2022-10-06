@@ -10,9 +10,6 @@ build:
 run: build
 	docker-compose up --remove-orphans app
 
-debug: build
-	docker-compose up --remove-orphans debug
-
 lint:
 	golangci-lint run
 
