@@ -8,6 +8,17 @@ For run project
 make run
 ```
 
+For build project
+```
+make build
+```
+
+For build docker image
+```
+make build
+docker build -t <image_name>:<version> -f Dockerfile.build .
+```
+
 ## Environment variables
 ```env
 # Timezone
