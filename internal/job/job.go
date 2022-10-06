@@ -82,15 +82,22 @@ func (ij *InfoJob) Run() {
 // Private method for send telegram notifications
 func (ij *InfoJob) sendNotifications(bi []*BackupInfo) {
 	var msg string
+	var backups []*BackupInfo
 
 	// Get only full backups
 	fullBackupsInfo := getOnlyFullBackups(bi)
 
+	if ij.Config.IsOnlyFullBackups {
+		backups = append(backups, fullBackupsInfo...)
+	} else {
+		backups = append(backups, bi...)
+	}
+
 	// If not full backups send message for users that backups is not exists
 	// Else send backups info
-	msg = MakeBackupsInfoMessage(fullBackupsInfo)
+	msg = MakeBackupsInfoMessage(backups)
 	if len(fullBackupsInfo) < 1 {
-		logger.Warn("[NotifierJob] Backups not found!")
+		logger.Warn("[NotifierJob] Full backups not found!")
 		logger.Info("[NotifierJob] Send notifications of backups not found!")
 
 		msg = "<b>Список бэкапов:</b>"
@@ -132,15 +139,18 @@ func MakeBackupsInfoMessage(bi []*BackupInfo) string {
 
 // Private function for save backups info to storage
 func (ij *InfoJob) saveBackupsInfoFile(bi []*BackupInfo) error {
+	var backups []*BackupInfo
+
 	fullBackupsInfo := getOnlyFullBackups(bi)
 
-	// If not full backups, return non error
-	if len(fullBackupsInfo) < 1 {
-		return nil
+	if ij.Config.IsOnlyFullBackups {
+		backups = append(backups, fullBackupsInfo...)
+	} else {
+		backups = append(backups, bi...)
 	}
 
-	// Parse fullBackupsInfo to json
-	backupsInfoJson, err := json.Marshal(fullBackupsInfo)
+	// Parse backups to json
+	backupsInfoJson, err := json.Marshal(backups)
 	if err != nil {
 		return err
 	}
