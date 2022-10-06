@@ -70,10 +70,13 @@ func (ij *InfoJob) Run() {
 
 	ij.sendNotifications(backupsInfo)
 
-	// Save backupsInfo log file to storage
-	err = ij.saveBackupsInfoFile(backupsInfo)
-	if err != nil {
-		logger.Errorf("[NotifierJob] Error on upload file: %s", err.Error())
+	// Save info to json if config var is true
+	if ij.Config.IsSaveInfoToJson {
+		// Save backupsInfo log file to storage
+		err = ij.saveBackupsInfoFile(backupsInfo)
+		if err != nil {
+			logger.Errorf("[NotifierJob] Error on upload file: %s", err.Error())
+		}
 	}
 
 	logger.Info("[NotifierJob] End processing job!")
