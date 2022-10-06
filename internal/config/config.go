@@ -17,12 +17,13 @@ var TimeZone *time.Location
 
 type (
 	Config struct {
-		timezone string `envconfig:"app_timezone" default:"UTC"` // String timezone format
-		Timezone *time.Location
-		CronSpec string `envconfig:"cron_backups_info" required:"true"`
-		WalG     WalGConfig
-		Minio    MinioConfig
-		Telegram TelegramConfig
+		timezone          string `envconfig:"app_timezone" default:"UTC"` // String timezone format
+		Timezone          *time.Location
+		CronSpec          string `envconfig:"cron_backups_info" required:"true"`
+		IsOnlyFullBackups bool   `envconfig:"is_only_full_backups" default:"false"`
+		WalG              WalGConfig
+		Minio             MinioConfig
+		Telegram          TelegramConfig
 	}
 	WalGConfig struct {
 		BinaryPath  string `envconfig:"walg_binary_path" default:"/bin/wal-g"`
