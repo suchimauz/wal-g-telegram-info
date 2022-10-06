@@ -21,6 +21,7 @@ type (
 		Timezone          *time.Location
 		CronSpec          string `envconfig:"cron_backups_info" required:"true"`
 		IsOnlyFullBackups bool   `envconfig:"is_only_full_backups" default:"false"`
+		IsSaveInfoToJson  bool   `envconfig:"is_save_info_to_json" default:"false"`
 		WalG              WalGConfig
 		Minio             MinioConfig
 		Telegram          TelegramConfig
