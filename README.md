@@ -13,6 +13,14 @@ make run
 # Timezone
 APP_TIMEZONE=UTC
 
+# For get information about of only full backups set is true
+# If set is false, get information for incremental backups too
+# default: false
+IS_ONLY_FULL_BACKUPS=false
+# For save information about of backups to json file in minio to subfolder logs_005 set true
+# default: false
+IS_SAVE_INFO_TO_JSON=false
+
 # MINIO host, required
 MINIO_HOST=<minio_host>
 # MINIO username, required
