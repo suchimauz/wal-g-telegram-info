@@ -2,6 +2,7 @@ package job
 
 import (
 	"encoding/json"
+	"regexp"
 	"time"
 )
 
@@ -43,4 +44,25 @@ func parseBackupsInfoJson(backupsJson string) ([]*BackupInfo, error) {
 	}
 
 	return backupsInfo, nil
+}
+
+// Get only full wal-g backups
+// base_00000005000034600000006B -> true
+// base_00000005000034600000006B_D_00000005000033A50000006C -> false
+// backup name, which have _D_SOME is incremental backups
+func getOnlyFullBackups(bi []*BackupInfo) []*BackupInfo {
+	var preparedBackupsInfo []*BackupInfo
+
+	// Initial regexp for check backup is full
+	re, _ := regexp.Compile("^(.*)_(.*)_(.*)$")
+
+	// Get only full backups info, check backup name
+	for _, backupInfo := range bi {
+		matched := re.MatchString(backupInfo.BackupName)
+		if !matched {
+			preparedBackupsInfo = append(preparedBackupsInfo, backupInfo)
+		}
+	}
+
+	return preparedBackupsInfo
 }
