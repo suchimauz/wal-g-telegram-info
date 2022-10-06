@@ -56,6 +56,9 @@ TELEGRAM_BOT_TOKEN=<token>
 # Example: 123456,283213 or 123456
 # required
 TELEGRAM_CHAT_IDS=<chat_ids>
+# Telegram http proxy, if required
+# Example: http://127.0.0.1:9218
+TELEGRAM_HTTP_PROXY=<proxy>
 
 # cron: Second | Minute | Hour | Dom | Month | Dow
 # for execute EXEC_BACKUP command
